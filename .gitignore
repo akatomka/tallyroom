@@ -14,3 +14,6 @@ next-env.d.ts
 # misc
 .DS_Store
 npm-debug.log*
+
+# Local reminder previews contain client information
+/.reminder-previews/
