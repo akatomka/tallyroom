@@ -28,6 +28,21 @@ async function visibleDocuments(email: string, password: string) {
 }
 
 describe("document visibility", () => {
+  it("does not expose another client's documents when their business ID is requested", async () => {
+    const harbour = await signInAs("alex@tallyroom.test", "trial-pass-1");
+    const northgate = await signInAs("sam@tallyroom.test", "trial-pass-2");
+
+    const { data: otherClient, error: clientError } = await northgate
+      .from("clients").select("id").single();
+    if (clientError) throw clientError;
+
+    const { data, error } = await harbour.from("documents")
+      .select("id, client_id").eq("client_id", otherClient.id);
+
+    expect(error).toBeNull();
+    expect(data).toEqual([]);
+  });
+
   it("shows Harbour Bakery its own 3 documents and nothing else", async () => {
     const { client, documents } = await visibleDocuments("alex@tallyroom.test", "trial-pass-1");
 
