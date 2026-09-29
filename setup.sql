@@ -33,4 +33,10 @@ create policy "clients see own record" on public.clients
 drop policy if exists "clients see own documents" on public.documents;
 create policy "clients see own documents" on public.documents
   for select to authenticated
-  using (client_id = auth.uid());
+  using (
+    exists (
+      select 1 from public.clients
+      where clients.id = documents.client_id
+        and clients.user_id = (select auth.uid())
+    )
+  );
