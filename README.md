@@ -156,6 +156,21 @@ temporary documents and removes them and their reservations afterwards; no mail
 is sent. Run this separately from visibility tests, which expect exact document
 counts. Mock SMTP tests do not prove actual provider delivery.
 
+## Staff document exports
+
+`GET /api/export?clientId=<business UUID>` requires a verified login and staff
+authorisation. Set `EXPORT_STAFF_USER_IDS` on the server to a comma-separated
+list of approved staff Supabase Auth user IDs. It is empty by default, disabling
+exports. Create a separate staff account through Supabase Auth, confirm it with
+the firm, and use its user UUID from Authentication > Users. Do not add either
+seeded client account. This permission grants export access across all businesses.
+
+The endpoint returns 401 for unauthenticated requests and 403 for users outside
+the configured list. User-editable profile metadata cannot grant staff access.
+Admin database access is created only after authorisation and input validation.
+CSV responses disable caching and escape quotes and spreadsheet formula prefixes.
+An authorised request for a business without documents returns a header-only CSV.
+
 ## Contact
 
 Priya Shah, Operations Manager at the firm.
