@@ -10,6 +10,7 @@
     "reminders:preview": "tsx scripts/reminders.ts",
     "reminders:send": "tsx scripts/reminders.ts --send",
     "reminders:check-db": "tsx scripts/check-reminder-database.ts",
+    "reminders:test-smtp": "tsx scripts/test-smtp.ts",
     "test": "vitest run"
   },
   "dependencies": {

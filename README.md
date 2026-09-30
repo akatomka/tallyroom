@@ -91,6 +91,15 @@ replaces documents and therefore deletes their associated reminder history.
 
 ### Live SMTP configuration
 
+For a manual SMTP sandbox demonstration, run `npm run reminders:test-smtp`.
+It creates a temporary Ethereal test mailbox, sends a synthetic reminder through
+the application's TLS SMTP adapter, and saves mailbox login details under the
+Git-ignored `.reminder-previews/ethereal-account.json`. It does not load production
+credentials or touch Supabase. Ethereal captures the message and never forwards
+it to a real recipient. This verifies SMTP submission, not real inbox delivery.
+Log in at https://ethereal.email/login to show the captured email in your video;
+do not display the credentials file. The external test service must be reachable.
+
 Ask Dan for the SMTP host, port (465 or 587), username, password/app password and
 approved sender address. Confirm his provider supports SMTP authentication;
 providers requiring OAuth need an additional adapter. Put these server-only values
